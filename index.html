@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tide Out — Mindful browsing</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="brand"><h1>Tide Out<span>.</span></h1><p>A feed with room to stop.</p></header>
+
+    <!-- Check in before scrolling; choose viewing effects beside the video. -->
+    <section id="cover" aria-labelledby="cover-title">
+      <img id="cover-photo" class="cover-photo" src="media/flow.jpg" alt="A quiet path through green trees">
+      <p class="eyebrow">TAKE A SMALL BREAK</p>
+      <h2 id="cover-title">Why do you want<br>to scroll?</h2>
+      <p class="intro">Take a moment to check in before you begin.</p>
+      <fieldset class="reason-options">
+        <legend>Choose what fits right now.</legend>
+        <label class="reason-choice" id="choice-moments"><input class="reason-input" id="reason-moments" type="radio" name="reason" value="moments"><span><strong>A spare moment</strong><small>Short gaps in the day.</small></span></label>
+        <label class="reason-choice" id="choice-rest"><input class="reason-input" id="reason-rest" type="radio" name="reason" value="rest"><span><strong>Rest and relaxation</strong><small>A little time to unwind.</small></span></label>
+        <label class="reason-choice" id="choice-habit"><input class="reason-input" id="reason-habit" type="radio" name="reason" value="habit"><span><strong>Boredom or habit</strong><small>Opening the feed without a plan.</small></span></label>
+        <label class="reason-choice" id="choice-bedtime"><input class="reason-input" id="reason-bedtime" type="radio" name="reason" value="bedtime"><span><strong>Before bed or low energy</strong><small>Winding down or feeling tired.</small></span></label>
+      </fieldset>
+      <details class="time-settings">
+        <summary>Break time · <span id="duration-label">5 min</span></summary>
+        <label for="duration">Choose a little time
+          <select id="duration"><option value="300">5 min</option><option value="600">10 min</option><option value="900">15 min</option><option value="30">30 sec · classroom demo</option></select>
+        </label>
+      </details>
+      <button id="enter" class="primary full-button" disabled>Enter feed →</button>
+      <p class="note">Your pace, your choice. Pause whenever you need.</p>
+    </section>
+
+    <section id="feed" hidden aria-label="Short-video feed">
+      <div class="feed-nav">
+        <button id="back" class="text-button">← Cover</button>
+        <div class="clock"><strong id="remaining">05:00</strong><span>remaining</span></div>
+      </div>
+      <p id="feed-reason" class="session-reason"></p>
+      <section id="stage" class="stage" aria-label="Swipe up to change video, or use the Next button.">
+        <video id="video" playsinline muted loop preload="metadata" aria-label="Silent short video"></video>
+        <div class="feed-heading"><span>For you</span><span id="clip-topic">Lively scenes</span></div>
+
+        <!-- Independent effects. Percentages show effect strength. -->
+        <div class="mode-rail" aria-label="Optional video effects">
+          <button class="mode" data-mode="slow" aria-pressed="false" aria-describedby="slow-level" aria-label="Slow: gradually slow down the video"><span class="mode-icon" aria-hidden="true">◷</span><span>Slow</span><small id="slow-level">0%</small></button>
+          <button class="mode" data-mode="space" aria-pressed="false" aria-describedby="space-level" aria-label="Space: shrink the video and add blank space"><span class="mode-icon" aria-hidden="true">↘</span><span>Space</span><small id="space-level">0%</small></button>
+          <button class="mode" data-mode="colour" aria-pressed="false" aria-describedby="colour-level" aria-label="Colour: lower saturation towards black and white"><span class="mode-icon" aria-hidden="true">◐</span><span>Colour</span><small id="colour-level">0%</small></button>
+          <button class="mode" data-mode="dim" aria-pressed="false" aria-describedby="dim-level" aria-label="Dim: gradually lower video brightness"><span class="mode-icon" aria-hidden="true">☼</span><span>Dim</span><small id="dim-level">0%</small></button>
+        </div>
+
+        <div class="caption"><p class="creator">@tide.breaks</p><h2 id="clip-title">A busy city street</h2><p id="clip-description"></p><a id="source" target="_blank" rel="noopener noreferrer">Video source · Mixkit</a></div>
+        <div class="clip-track" aria-hidden="true"><div id="clip-progress"></div></div>
+      </section>
+      <div class="playback-controls"><button id="previous">Previous</button><button id="play">Pause</button><button id="next">Next</button></div>
+      <p id="status" class="status" role="status">Turn on an effect, then swipe up or press Next.</p>
+      <div class="exit-controls"><button id="restore">Restore</button><button id="take-break" class="primary">Take a break</button></div>
+      <p class="note">Silent clips · Percentages show effect strength.</p>
+    </section>
+
+    <details class="about"><summary>How it works</summary><p>Choose your reason for scrolling. As you move through the feed, busy streets and everyday moments give way to trees, water and sunset. The sequence ends with a chance to pause.</p><p>The four side buttons change the video: Slow lowers playback speed, Space makes the picture smaller, Colour lowers saturation, and Dim lowers brightness.</p><p>Each percentage shows effect strength: 0% is off, 10% is the starting level, and 100% is the strongest effect. It increases by 18 percentage points with each video change. You can combine effects, switch any one off, or use Restore.</p><p>Student prototype. Your reason stays on this page and does not change the effects automatically. Wellbeing benefits have not been tested.</p></details>
+
+    <dialog id="reflection" aria-labelledby="reflection-title">
+      <h2 id="reflection-title">A moment to pause.</h2><p id="reflection-summary"></p>
+      <fieldset><legend>Did this break help? <span>(optional)</span></legend><div class="responses"><button class="response" aria-pressed="false">Yes</button><button class="response" aria-pressed="false">A little</button><button class="response" aria-pressed="false">Not really</button></div></fieldset>
+      <p id="reflection-note" class="note">Your answer is not saved or sent.</p><p>Look away, stretch, or return to your day.</p>
+      <div class="dialog-actions"><button id="finish" class="primary">Finish for now</button><button id="continue">Restore &amp; continue</button></div>
+    </dialog>
+    <noscript>Please enable JavaScript to use this prototype.</noscript>
+  </main>
+</body>
+</html>
